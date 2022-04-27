@@ -1,4 +1,4 @@
-#Specification of the microservice working scheme
+# Specification of the microservice working scheme
 
 ### Github
 	
@@ -29,7 +29,7 @@
         result_dict['action'] = action
         result_dict['issue'] = parseOther(base_issue, base_user)
 	
-	Think about what keys needed when docker container is started. For example in the repo json-filter/.env specified:
+#### Think about what keys needed when docker container is started. For example in the repo json-filter/.env specified:
 		# Flask webhook listener
 		HOST = "0.0.0.0"
 		PORT = "5000"
