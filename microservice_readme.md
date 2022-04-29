@@ -1,5 +1,10 @@
 # Specification of the microservice working scheme
 
+### Create infrastructure
+	docker network create -d bridge kv126
+	docker run --network=kv126 -d --name postgres -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=dbpass postgres:14
+	docker run --network=kv126 -d --name rabbit -e RABBITMQ_DEFAULT_USER=mquser -e RABBITMQ_DEFAULT_PASS=mqpass -p 15672:15672 rabbitmq:3.9-management
+
 ### Github
 	
 	Integration with https://github.com/Kv-126-DevOps/None.git
@@ -49,16 +54,27 @@
 		CHANNEL = rabbit-to-slack
 	
 #### Working version:
-#Run json-filter
+	#Run json-filter
 
-git clone --branch develop https://github.com/Kv-126-DevOps/json-filter.git /opt/json-filter
-docker run --network=kv126 -d --name json-filter -e HOST="0.0.0.0" -e PORT="5000" -e QUEUE_SLACK="slack" -e QUEUE_RESTAPI="restapi" -e TOKEN=<tocken for slack> -e CHANNEL="rabbit-to-slack" -e RMQ_HOST=rabbit -e RMQ_PORT=5672 -e RMQ_LOGIN=mquser -e RMQ_PASS=mqpass -p 5000:5000 -v /opt/json-filter:/app python:3.9-slim sleep infinity
-docker exec json-filter pip install pika flask python-dotenv
-docker exec -d json-filter bash -c "cd /app && python ./jsonfilter.py"
+	git clone --branch develop https://github.com/Kv-126-DevOps/json-filter.git /opt/json-filter
+	docker run --network=kv126 -d --name json-filter -e HOST="0.0.0.0" -e PORT="5000" -e QUEUE_SLACK="slack" -e QUEUE_RESTAPI="restapi" -e TOKEN=<tocken for slack> -e CHANNEL="rabbit-to-slack" -e RMQ_HOST=rabbit -e RMQ_PORT=5672 -e RMQ_LOGIN=mquser -e RMQ_PASS=mqpass -p 5000:5000 -v /opt/json-filter:/app python:3.9-slim sleep infinity
+	docker exec json-filter pip install pika flask python-dotenv
+	docker exec -d json-filter bash -c "cd /app && python ./jsonfilter.py"
 
 ### RabbitMQ-to-DB		https://github.com/Kv-126-DevOps/rabbit-to-bd.git
 
 ### RabbitMQ-to-slack	https://github.com/Kv-126-DevOps/rabbit_to_slack.git
 
+	In the slack application configure "Incoming Webhooks to slack" create Webhook URL that will be as SLACK_URL variable  [link]	(https://medium.com/@sharan.aadarsh/sending-notification-to-slack-using-python-8b71d4f622f3)
+	Channel for slack is specified during "Incoming Webhooks to slack" configuration.
+
+#### Run rabbit-to-slack
+    git clone --branch 1-rabbit-to-slack-code-refactoring https://github.com/Kv-126-DevOps/rabbit_to_slack.git /opt/rabbit-to-slack
+    docker run --network=kv126 -e RABBIT_HOST=rabbit -e RABBIT_PORT=5672 -e RABBIT_USER=mquser -e RABBIT_PW=mqpass -e RABBIT_QUEUE=slack -e SLACK_URL="https://hooks.slack.com/services/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" -d --name rabbit-to-slack -v /opt/rabbit-to-slack:/app python:3.9-slim sleep infinity
+    docker exec rabbit-to-slack  pip install -r /app/requirements.txt
+    docker exec -d rabbit-to-slack bash -c "cd /app && python ./app.py"
+
+    When  json-filter and rabbit-to-slack are configured , messages for new issues in the connected Github repo will be appeared in the slack channel "rabbit-to-db".
+	
 ### Rest API			https://github.com/Kv-126-DevOps/rest-api.git
 ### Frontend			https://github.com/Kv-126-DevOps/frontend.git
