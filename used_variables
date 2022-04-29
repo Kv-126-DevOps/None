@@ -11,7 +11,9 @@ RABBIT_PW=mqpass
 RABBIT_QUEUE_RESTAPI=restapi
 RABBIT_QUEUE_SLACK=slack
 
-SLACK_URL=https://hooks.slack.com/services/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 -  Webhook URL that is created during configuration in the slack "Incoming Webhooks to slack"
+SLACK_URL= Get from https://devopskv-126.slack.com/services/3459809187923?updated=1 -> Webhook URL
+           Webhook URL that is created during configuration in the slack "Incoming Webhooks to slack".
+           When specify it in the GitHub, it is unclear why locked and should be recreated.
 CHANNEL="rabbit-to-slack" - it is better to change veriable to SLACK_CHANNEL
 
 TOKEN = Get it from https://api.slack.com/apps/A03DGUF01FE -> App-Level Tokens -> rabbit-to-slack 
