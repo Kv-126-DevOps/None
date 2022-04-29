@@ -5,7 +5,9 @@
 	Integration with https://github.com/Kv-126-DevOps/None.git
 	Configure webhook on the https://github.com/Kv-126-DevOps/None.git , specify:
 	 - Payload URL -  is the URL of the server that will receive the webhook 
-	   External IP of the docker with json filter 
+	   External IP of the docker with json filter ( I have done it without useng ssl, specify http http://<my external IP>:5000 )
+	 - Content type
+	   application/json
 	 - Which events would you like to trigger this webhook? 
 	   Choose "Send me everything"
 	
@@ -35,18 +37,25 @@
 		PORT = "5000"
 	
 		# RabbitMQ
-		RMQ_HOST = "15.237.25.152"
+		RMQ_HOST = "rabbit"
 		RMQ_PORT = "5672"
-		RMQ_LOGIN = "devops"
-		RMQ_PASS = "softserve"
+		RMQ_LOGIN = "mquser"
+		RMQ_PASS = "mqpass"
 		QUEUE_SLACK = "slack"
 		QUEUE_RESTAPI = "restapi"
 	
 		# Slack
-		TOKEN = xoxb-2292897144802-2289966105269-FcZG07kXE0CEu3omoTEaJCnA
-		CHANNEL = testchannel
+		TOKEN = xapp-1-A03DGUF01FE-3456829391299-f744d764b6342d31ddb40f1d62b0bc72d293868fa07e91216b766bf575919bfb
+		CHANNEL = rabbit-to-slack
 	
-	
+#### Worked start:
+Open 5000 port , configure webhook 
+#Run json-filter
+git clone --branch develop https://github.com/Kv-126-DevOps/json-filter.git /opt/json-filter
+docker run --network=kv126 -d --name json-filter -e HOST="0.0.0.0" -e PORT="5000" -e QUEUE_SLACK="slack" -e QUEUE_RESTAPI="restapi" -e TOKEN="xapp-1-A03DGUF01FE-3456829391299-f744d764b6342d31ddb40f1d62b0bc72d293868fa07e91216b766bf575919bfb" -e CHANNEL="rabbit-to-slack" -e RMQ_HOST=rabbit -e RMQ_PORT=5672 -e RMQ_LOGIN=mquser -e RMQ_PASS=mqpass -p 5000:5000 -v /opt/json-filter:/app python:3.9-slim sleep infinity
+docker exec json-filter pip install pika flask python-dotenv
+docker exec -d json-filter bash -c "cd /app && python ./jsonfilter.py"
+
 ### RabbitMQ-to-DB		https://github.com/Kv-126-DevOps/rabbit-to-bd.git
 
 ### RabbitMQ-to-slack	https://github.com/Kv-126-DevOps/rabbit_to_slack.git
