@@ -5,7 +5,7 @@
 	Integration with https://github.com/Kv-126-DevOps/None.git
 	Configure webhook on the https://github.com/Kv-126-DevOps/None.git , specify:
 	 - Payload URL -  is the URL of the server that will receive the webhook 
-	   External IP of the docker with json filter ( I have done it without useng ssl, specify http http://<my external IP>:5000 )
+	   External IP of the docker with json filter ( I have done it without using ssl, specify http http://<my external IP>:5000 )
 	 - Content type
 	   application/json
 	 - Which events would you like to trigger this webhook? 
@@ -48,7 +48,7 @@
 		TOKEN = xapp-1-A03DGUF01FE-3456829391299-f744d764b6342d31ddb40f1d62b0bc72d293868fa07e91216b766bf575919bfb
 		CHANNEL = rabbit-to-slack
 	
-#### Worked start:
+#### Working version:
 Open 5000 port , configure webhook 
 #Run json-filter
 git clone --branch develop https://github.com/Kv-126-DevOps/json-filter.git /opt/json-filter
