@@ -45,14 +45,14 @@
 		QUEUE_RESTAPI = "restapi"
 	
 		# Slack
-		TOKEN = xapp-1-A03DGUF01FE-3456829391299-f744d764b6342d31ddb40f1d62b0bc72d293868fa07e91216b766bf575919bfb
+		TOKEN = "xapp-1-A03DGUF01FE-3483057458896-d65cf9a72ffcb8b3e7fb0991f82b96d7a96d6da4bab7fce19f4b075acd15ff45"
 		CHANNEL = rabbit-to-slack
 	
 #### Working version:
 Open 5000 port , configure webhook 
 #Run json-filter
 git clone --branch develop https://github.com/Kv-126-DevOps/json-filter.git /opt/json-filter
-docker run --network=kv126 -d --name json-filter -e HOST="0.0.0.0" -e PORT="5000" -e QUEUE_SLACK="slack" -e QUEUE_RESTAPI="restapi" -e TOKEN="xapp-1-A03DGUF01FE-3456829391299-f744d764b6342d31ddb40f1d62b0bc72d293868fa07e91216b766bf575919bfb" -e CHANNEL="rabbit-to-slack" -e RMQ_HOST=rabbit -e RMQ_PORT=5672 -e RMQ_LOGIN=mquser -e RMQ_PASS=mqpass -p 5000:5000 -v /opt/json-filter:/app python:3.9-slim sleep infinity
+docker run --network=kv126 -d --name json-filter -e HOST="0.0.0.0" -e PORT="5000" -e QUEUE_SLACK="slack" -e QUEUE_RESTAPI="restapi" -e TOKEN="xapp-1-A03DGUF01FE-3483057458896-d65cf9a72ffcb8b3e7fb0991f82b96d7a96d6da4bab7fce19f4b075acd15ff45" -e CHANNEL="rabbit-to-slack" -e RMQ_HOST=rabbit -e RMQ_PORT=5672 -e RMQ_LOGIN=mquser -e RMQ_PASS=mqpass -p 5000:5000 -v /opt/json-filter:/app python:3.9-slim sleep infinity
 docker exec json-filter pip install pika flask python-dotenv
 docker exec -d json-filter bash -c "cd /app && python ./jsonfilter.py"
 
