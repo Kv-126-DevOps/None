@@ -11,10 +11,11 @@ RABBIT_PW=mqpass
 RABBIT_QUEUE_RESTAPI=restapi
 RABBIT_QUEUE_SLACK=slack
 
-SLACK_URL=<specify token for slack channel> - get form config of the created slack channel
-SLACK_CHANNEL=<SPECIFY CHANNEL>				- channel created in the slack
+SLACK_URL=https://hooks.slack.com/services/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 -  Webhook URL that is created during configuration in the slack "Incoming Webhooks to slack"
+CHANNEL="rabbit-to-slack" - it is better to change veriable to SLACK_CHANNEL
 
-TOKEN = xoxb-2292897144802-2289966105269-FcZG07kXE0CEu3omoTEaJCnA	 - ???
+TOKEN = Get it from https://api.slack.com/apps/A03DGUF01FE -> App-Level Tokens -> rabbit-to-slack 
+        it is better to rуname to SLACK_TOKEN, it is needed for app integration. When specify it in the GitHub, it is unclear why locked and should be recreated.
 
 #for json filter 
 #Flask webhook listener 
