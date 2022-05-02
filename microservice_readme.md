@@ -85,7 +85,7 @@
     docker exec rabbit-to-slack  pip install -r /app/requirements.txt
     docker exec -d rabbit-to-slack bash -c "cd /app && python ./app.py"
 
-    When  json-filter and rabbit-to-slack are configured , messages for new issues in the connected Github repo will be appeared in the slack channel "rabbit-to-db".
+    When  json-filter and rabbit-to-slack are configured , messages for new issues in the connected Github repo will be appeared in the slack channel "rabbit-to-slack".
     When specify SLACK_URL and TOKEN in the GitHub, it is unclear why locked and should be recreated.
     
 ### Rest API			https://github.com/Kv-126-DevOps/rest-api.git
