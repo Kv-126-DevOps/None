@@ -63,6 +63,17 @@
 
 ### RabbitMQ-to-DB		https://github.com/Kv-126-DevOps/rabbit-to-bd.git
 
+    git clone --branch 1-rabbit-to-bd-code-refactoring https://github.com/Kv-126-DevOps/rabbit-to-bd.git /opt/rabbit-to-bd
+    docker run --network=kv126 -e POSTGRES_HOST=postgres -e POSTGRES_PORT=5432 -e POSTGRES_USER=dbuser -e POSTGRES_PW=dbpass -e POSTGRES_DB=postgres -e RABBIT_HOST=rabbit -e RABBIT_PORT=5672 -e RABBIT_USER=mquser -e RABBIT_PW=mqpass -e RABBIT_QUEUE=restapi -d --name rabbit-to-bd -v /opt/rabbit-to-bd:/app python:3.9-slim sleep infinity
+    docker exec rabbit-to-bd pip install -r /app/requirements.txt
+    docker exec -d rabbit-to-bd bash -c "cd /app && python ./app.py"
+
+#### Check of the working capacity 
+	When RabbitMQ-to-DB, json-filter started (with "Create infrastructure" param), records of issues created in the github should be added to postgre DB. When connect to DB container , check: 
+	psql -d postgres -U dbuser -W
+	\dt+
+	and for example TABLE "Issues";
+	
 ### RabbitMQ-to-slack	https://github.com/Kv-126-DevOps/rabbit_to_slack.git
 
 	In the slack application configure "Incoming Webhooks to slack" create Webhook URL that will be as SLACK_URL variable  [link]	(https://medium.com/@sharan.aadarsh/sending-notification-to-slack-using-python-8b71d4f622f3)
