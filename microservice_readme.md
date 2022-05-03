@@ -89,4 +89,11 @@
     When specify SLACK_URL and TOKEN in the GitHub, it is unclear why locked and should be recreated.
     
 ### Rest API			https://github.com/Kv-126-DevOps/rest-api.git
+	git clone --branch 14-rest-api-code-refactoring https://github.com/Kv-126-DevOps/rest-api.git /opt/rest-api 
+	docker run --network=kv126 -d --name rest-api -e POSTGRES_HOST=postgres -e POSTGRES_PORT=5432 -e POSTGRES_USER=dbuser -e POSTGRES_PASS=dbpass -e POSTGRES_DB=postgres -v /opt/rest-api:/app -p 8080:5000 python:3.9-slim sleep infinity 
+	docker exec rest-api pip install -r /app/requirements.txt docker exec -d rest-api bash -c "cd /app && flask run --host=0.0.0.0"
+	 
 ### Frontend			https://github.com/Kv-126-DevOps/frontend.git
+	git clone --branch 1_frontend_code_refactoring https://github.com/Kv-126-DevOps/frontend.git /opt/frontend 
+	docker run --network=kv126 -d --name frontend -e RESTAPI_HOST=rest-api -e RESTAPI_PORT=5000 -v /opt/frontend:/app -p 80:5000 python:3.9-slim sleep infinity 
+	docker exec frontend pip install -r /app/requirements.txt docker exec -d frontend bash -c "cd /app && flask run --host=0.0.0.0"
