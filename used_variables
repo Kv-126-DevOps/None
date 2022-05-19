@@ -1,0 +1,34 @@
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_USER=dbuser
+POSTGRES_PW=dbpass
+POSTGRES_DB=postgres
+
+RABBIT_HOST=rabbit
+RABBIT_PORT=5672
+RABBIT_USER=mquser
+RABBIT_PW=mqpass
+RABBIT_QUEUE_RESTAPI=restapi
+RABBIT_QUEUE_SLACK=slack
+
+SLACK_URL= Get from https://devopskv-126.slack.com/services/3459809187923?updated=1 -> Webhook URL
+           Webhook URL that is created during configuration in the slack "Incoming Webhooks to slack".
+           When specify it in the GitHub, it is unclear why locked and should be recreated.
+CHANNEL="rabbit-to-slack" - it is better to change veriable to SLACK_CHANNEL
+
+TOKEN = Get it from https://api.slack.com/apps/A03DGUF01FE -> App-Level Tokens -> rabbit-to-slack 
+        it is better to rуname to SLACK_TOKEN, it is needed for app integration. When specify it in the GitHub, it is unclear why locked and should be recreated.
+
+#for json filter 
+#Flask webhook listener 
+HOST = "0.0.0.0"
+PORT = "5000"
+
+#mantioned in the frontend/config.py
+SECRET_KEY -- ???
+
+RESTAPI_HOST
+RESTAPI_PORT
+
+APP_HOST -- default 0.0.0.0
+APP_PORT -- default 5000 or 8080
